@@ -2,16 +2,15 @@ require('dotenv').config();
 
 const express = require('express');
 const nodemailer = require('nodemailer');
-
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-//const sendMail = require('./mail');
+
 var PORT = process.env.PORT || 8080;
 
 
 // Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
@@ -49,8 +48,8 @@ app.post('/email', (req, res) => {
         let mailOptions = {
             from: '" my profoleo "<aLgandel86@gmail.com>', // sender address
             to: 'aLgandel86@gmail.com', // list of receivers
-           
-          
+
+
             subject: 'Node Contact Request web2', // Subject line
             text: req.body.message, // plain text body
             html: output // html body
@@ -68,13 +67,15 @@ app.post('/email', (req, res) => {
         });
     });
 });
-
-
-app.get('*', (req,res) => {
-    res.sendFile(path.join(__dirname, "index.html"))
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client'));
+}
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "index.html"))
 });
 
 
 app.listen(PORT, function () {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
+
