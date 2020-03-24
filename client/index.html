@@ -434,30 +434,22 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name"  />
+                  <input type="text" name="name" class="form-control" id="name" required />
                   <div class="validate"></div>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email"   />
+                  <input type="email" class="form-control" name="email" id="email"  required />
                   <div class="validate"></div>
                 </div>
               </div>
-              <!-- <div class="form-group">
-                <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" />
-                <div class="validate"></div>
-              </div> -->
+             
               <div class="form-group">
                 <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10"  id="message"  ></textarea>
+                <textarea class="form-control" name="message" rows="10"  id="message" required ></textarea>
                 <div class="validate"></div>
               </div>
-              <!-- <div class="mb-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div> -->
+            
               <div class="text-center"><button type="submit" value="Submit" > Submit </button></div>
             </form>
           </div>
@@ -506,16 +498,21 @@ $( "form" ).submit(function( event ) {
   event.preventDefault();
 alert("you submit")
   
-  const data = {
+ 
+
+ 
+  $.ajax({
+url: '/email',
+type: 'POST',
+headers: {'Accept': 'application/json;'},
+data: {
     email:  $('#email').val(),
     name: $('#name').val(),
     message: $('#message').val()
-  };
-
-  $.post('/email', data, function(){
-    console.log(' server resev')
-  })
-
+  },
+}).done(function (res) {
+  console.log(res); // it shows your email sent message.
+});
 })
 
 
