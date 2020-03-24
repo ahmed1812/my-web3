@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 //const sendMail = require('./mail');
-const PORT = 8080;
+var PORT = process.env.PORT || 8080;
 
 
 // Body Parser Middleware
@@ -70,7 +70,7 @@ app.post('/email', (req, res) => {
 });
 
 
-app.get('/', (req,res) => {
+app.get('*', (req,res) => {
     res.sendFile(path.join(__dirname, "index.html"))
 });
 
