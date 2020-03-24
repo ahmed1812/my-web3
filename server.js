@@ -6,11 +6,11 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
-var PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
 
 // Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
